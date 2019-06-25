@@ -1,5 +1,5 @@
 // create an array of topics
-var topics = ['Cat', 'Dog'];
+var topics = ['Cat', 'Dog', ];
 
 // Adding click event listener to all buttons
 function buttonClicked(event) {
@@ -15,7 +15,7 @@ function buttonClicked(event) {
         console.log(response);
 
         var item = response.data;
-
+        console.log(item);
         // var btn = $("<button>").text(input);
         // $("#filterBtns").append(btn);
 
@@ -25,18 +25,33 @@ function buttonClicked(event) {
         for (var i = 0; i < item.length; i++) {
 
             var displayDiv = $("<div>");
+            displayDiv.addClass("gifs");
+
             var p = $("<p>");
 
             // Set the inner text of the paragraph to the rating of the image in item[i].
             p.text("Raitings: " + item[i].rating).css("color", 'red');
 
             var displayImg = $("<img>");
+            displayImg.attr("data-state", "still");
+            displayImg.attr("data-state", "animated");
+
+            
+            if(state === "still") {
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+            } else {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr('data-state', "still");
+            }
+
             // set the image's src to result[i]'s fixed_height.url.
             displayImg.attr("src", item[i].images.fixed_height.url);
             // append the p variable to the displayDiv variable
             displayDiv.append(p, displayImg);
             // Prepend the animalDiv variable to the element with an id of gifs-appear-here.
             $('#gifs-appear-here').prepend(displayDiv);
+
         }
 
 
@@ -67,3 +82,7 @@ function makeButtons() {
 }
 
 makeButtons();
+
+$("#gifs-appear-here").on("click", ".gif", function(){
+    var state = $(this).attr
+})
