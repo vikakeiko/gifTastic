@@ -1,0 +1,13 @@
+#filterBtns{
+    border: 1px solid blue;
+}
+
+#gifs-appear-here {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+.giphy {
+    margin: 20px;
+}
