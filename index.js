@@ -1,5 +1,5 @@
 // create an array of topics
-var topics = ['Cat', 'Dog', ];
+var topics = ['The Simpsons', 'Family Guy', 'Death Note', 'Pokemon', 'One Piece', 'Mickey Mouse', 'Tom & Jerry', 'Batman', 'Super Mario','Toy Story3', 'Minions',];
 
 // Adding click event listener to all buttons
 function buttonClicked(event) {
@@ -14,10 +14,9 @@ function buttonClicked(event) {
     }).then(function (response) {
         console.log(response);
 
+        // calling "item" for each data
         var item = response.data;
         console.log(item);
-        // var btn = $("<button>").text(input);
-        // $("#filterBtns").append(btn);
 
         $("#gifs-appear-here").empty();
 
@@ -26,50 +25,39 @@ function buttonClicked(event) {
 
             var displayDiv = $("<div>");
             displayDiv.addClass("gifs");
-
             var p = $("<p>");
 
             // Set the inner text of the paragraph to the rating of the image in item[i].
-            p.text("Raitings: " + item[i].rating).css("color", 'red');
+            p.text("Raitings: " + item[i].rating).css("color", 'gold');
 
             var displayImg = $("<img>");
+
+            displayImg.attr("src", item[i].images.fixed_height_still.url);
+
+            // initially, imgs are still
             displayImg.attr("data-state", "still");
-            displayImg.attr("data-state", "animated");
 
-            
-            if(state === "still") {
-                $(this).attr("src", $(this).attr("data-animate"));
-                $(this).attr("data-state", "animate");
-            } else {
-                $(this).attr("src", $(this).attr("data-still"));
-                $(this).attr('data-state', "still");
-            }
+            displayImg.attr("data-still", item[i].images.fixed_height_still.url)
+            displayImg.attr("data-animate", item[i].images.fixed_height.url)
 
-            // set the image's src to result[i]'s fixed_height.url.
-            displayImg.attr("src", item[i].images.fixed_height.url);
             // append the p variable to the displayDiv variable
             displayDiv.append(p, displayImg);
             // Prepend the animalDiv variable to the element with an id of gifs-appear-here.
             $('#gifs-appear-here').prepend(displayDiv);
-
         }
-
-
-
     });
     event.preventDefault();
-
 }
 
+// when the user submit, the funtction runs 
 $('form').submit(function (event) {
     event.preventDefault();
-
     input = $("#input").val().trim();
     topics.push(input);
     makeButtons();
 });
 
-//  make buttoms 
+//  making buttoms 
 function makeButtons() {
     $('#filterBtns').empty();
     for (var i = 0; i < topics.length; i++) {
@@ -80,9 +68,18 @@ function makeButtons() {
         buttonClicked(event);
     });
 }
-
 makeButtons();
 
-$("#gifs-appear-here").on("click", ".gif", function(){
-    var state = $(this).attr
+// when the user clicks the images 
+$("#gifs-appear-here").on("click", "img", function () {
+    var state = $(this).attr("data-state");
+
+
+    if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+    } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr('data-state', "still");
+    }
 })
