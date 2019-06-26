@@ -3,8 +3,12 @@ var topics = ['The Simpsons', 'Family Guy', 'Death Note', 'Pokemon', 'One Piece'
 
 // Adding click event listener to all buttons
 function buttonClicked(event) {
+    event.preventDefault();
+
     // get input
     var input = $(event.target).text().trim();
+
+
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         input + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
     // make get request to giphy api
@@ -46,13 +50,16 @@ function buttonClicked(event) {
             $('#gifs-appear-here').prepend(displayDiv);
         }
     });
-    event.preventDefault();
 }
 
 // when the user submit, the funtction runs 
 $('form').submit(function (event) {
     event.preventDefault();
     input = $("#input").val().trim();
+    // console.log('input ' + input)
+    if(!input || input === "" ) {
+        return;
+    }
     topics.push(input);
     makeButtons();
 });
